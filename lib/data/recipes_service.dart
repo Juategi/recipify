@@ -1,36 +1,21 @@
 import 'dart:convert';
+import 'http_client.dart';
 import 'models/recipe_request.dart';
-import 'package:http/http.dart' as http;
 
 class RecipesService {
-  final String baseUrl = '127.0.0.1:3002';
-
+  final HttpClient httpClient = HttpClient();
   Future<List<RecipeRequest>> getRecipes() async {
-    var url = Uri.http(baseUrl, '/recipes');
-    try {
-      var response = await http.get(url);
-      if (response.statusCode != 200) {
-        throw Exception('Error getting recipes: ${response.statusCode}');
-      }
-      return (jsonDecode(response.body) as List<dynamic>)
-          .map((e) => RecipeRequest.fromJson(e))
-          .toList();
-    } catch (e) {
-      throw Exception('Error getting recipes: $e');
-    }
+    String response = await httpClient.get(
+        endpoint: '/recipes', errorText: 'Error getting recipes');
+    return (jsonDecode(response) as List<dynamic>)
+        .map((e) => RecipeRequest.fromJson(e))
+        .toList();
   }
 
   Future<RecipeRequest> getRecipe(String id) async {
-    var url = Uri.http(baseUrl, '/recipes/$id');
-    try {
-      var response = await http.get(url);
-      if (response.statusCode != 200) {
-        throw Exception('Error getting recipe: ${response.statusCode}');
-      }
-      return RecipeRequest.fromJson(jsonDecode(response.body));
-    } catch (e) {
-      throw Exception('Error getting recipe: $e');
-    }
+    String response = await httpClient.get(
+        endpoint: '/recipes/$id', errorText: 'Error getting recipe');
+    return RecipeRequest.fromJson(jsonDecode(response));
   }
 }
 
