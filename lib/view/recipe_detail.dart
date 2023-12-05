@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:recipy/common/styles.dart';
 import 'package:recipy/view/providers/recipe_provider.dart';
 import 'package:recipy/view/widgets/recipe_info.dart';
 
@@ -18,7 +19,7 @@ class RecipeDetail extends ConsumerWidget {
           appBar: AppBar(
             title: Row(
               children: [
-                Text(value.title),
+                Text(value.title, style: TextStyles.title),
                 const Spacer(),
                 FavoriteWidget(
                   id: value.id,
