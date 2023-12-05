@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'common/dependency_injection.dart';
 import 'common/routes.dart';
 import 'view/recipe_detail.dart';
 import 'view/recipes_list.dart';
 
 void main() {
+  DependendyInjection.setUp();
   runApp(ProviderScope(child: MyApp()));
 }
 

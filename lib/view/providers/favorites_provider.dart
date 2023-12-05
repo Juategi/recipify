@@ -1,10 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:recipy/domain/repositories/favorites_repository.dart';
+import 'package:get_it/get_it.dart';
 import 'package:recipy/domain/usecases/add_favorite_case.dart';
 import 'package:recipy/domain/usecases/get_favorites_case.dart';
 import 'package:recipy/domain/usecases/remove_favorite_case.dart';
-
-import 'repository_provider.dart';
 
 class AsyncFavoritesNotifier extends AsyncNotifier<List<String>> {
   late AddFavoriteCase _addFavoriteCase;
@@ -13,10 +11,9 @@ class AsyncFavoritesNotifier extends AsyncNotifier<List<String>> {
 
   @override
   Future<List<String>> build() async {
-    FavoritesRepository repository = ref.watch(favoriteRepositoryProvider);
-    _addFavoriteCase = AddFavoriteCase(repository);
-    _removeFavoriteCase = RemoveFavoriteCase(repository);
-    _getFavoriteCase = GetFavoriteCase(repository);
+    _addFavoriteCase = GetIt.I<AddFavoriteCase>();
+    _removeFavoriteCase = GetIt.I<RemoveFavoriteCase>();
+    _getFavoriteCase = GetIt.I<GetFavoriteCase>();
     return await _getFavoriteCase.call();
   }
 

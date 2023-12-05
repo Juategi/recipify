@@ -8,7 +8,7 @@ class HttpClient {
       var url = Uri.http(baseUrl, endpoint);
       var response = await http.get(url);
       if (response.statusCode != 200) {
-        throw Exception('$errorText: ${response.statusCode}');
+        throw Exception(response.statusCode);
       }
       return response.body;
     } catch (e) {
